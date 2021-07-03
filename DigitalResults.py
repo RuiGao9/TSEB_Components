@@ -41,19 +41,19 @@ Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, and
     raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_pt_2, nodata_to_value=-9999)
 
     out_rn = raster_tseb[n_rn,:,:]*raster_footprint
-    out_rn[out_rn>1000] = 0
+    out_rn[out_rn>1500] = 0
     out_rn[out_rn<-100] = 0
     out_h = raster_tseb[n_h,:,:]*raster_footprint
-    out_h[out_h>1000] = 0
+    out_h[out_h>1500] = 0
     out_h[out_h<-100] = 0
     out_le = raster_tseb[n_le,:,:]*raster_footprint
-    out_le[out_le>1000] = 0
+    out_le[out_le>1500] = 0
     out_le[out_le<-100] = 0
     out_g = raster_tseb[n_g,:,:]*raster_footprint
-    out_g[out_g>1000] = 0
+    out_g[out_g>1500] = 0
     out_g[out_g<-100] = 0
     out_t = out_le*raster_tseb_ancillary[n_t_et,:,:]
-    out_t[out_t>1000] = 0
+    out_t[out_t>1500] = 0
     out_t[out_t<-100] = 0
 
     out_rn = np.nansum(out_rn)
