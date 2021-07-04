@@ -1,5 +1,6 @@
 def DigitalResults(footprint, tseb_pt_1, tseb_pt_2, dir_out, 
-                   n_rn, n_h, n_le, n_g, n_t_et, pixel_size):
+                   n_rn, n_h, n_le, n_g, n_t_et, pixel_size,
+                   upper_boundary, lower_boundary):
     '''
     parameters:
     footprint: directory of the footprint image.
@@ -8,7 +9,9 @@ def DigitalResults(footprint, tseb_pt_1, tseb_pt_2, dir_out,
     dir_out: directory of the outputs from this scripts. they are transform results and they can be deleted.
     n_rn, n_h, n_le, n_g: the layer number of the net radiation, sensible heat flux, latent heat flux, and soil surface heat flux.
     n_t_et: the layer number of the ratio between canopy latent heat flux and total latent heat flux.
-    pixel_size: the pixel size (e.g., 3.6 meter by 3.6 meter)
+    pixel_size: the pixel size (e.g., 3.6 meter by 3.6 meter).
+    upper_boundary: the upper threshold for all fluxes at one pixel which does not make sense, e.g., 10,000 W/m2 for LE at one pixel.
+    lower_boundary: the lower threshold for all fluxes at one pixel which does not make sense, e.g., -1,500 W/m2 for LE at one pixel.
 
     return:
     Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, and canopy latent heat flux within the footprint gained from TSEB model.
@@ -40,21 +43,30 @@ def DigitalResults(footprint, tseb_pt_1, tseb_pt_2, dir_out,
     raster_tseb = arcpy.RasterToNumPyArray(tseb_pt_1, nodata_to_value=-9999)
     raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_pt_2, nodata_to_value=-9999)
 
-    out_rn = raster_tseb[n_rn,:,:]*raster_footprint
-    out_rn[out_rn>1500] = 0
-    out_rn[out_rn<-100] = 0
-    out_h = raster_tseb[n_h,:,:]*raster_footprint
-    out_h[out_h>1500] = 0
-    out_h[out_h<-100] = 0
-    out_le = raster_tseb[n_le,:,:]*raster_footprint
-    out_le[out_le>1500] = 0
-    out_le[out_le<-100] = 0
-    out_g = raster_tseb[n_g,:,:]*raster_footprint
-    out_g[out_g>1500] = 0
-    out_g[out_g<-100] = 0
-    out_t = out_le*raster_tseb_ancillary[n_t_et,:,:]
-    out_t[out_t>1500] = 0
-    out_t[out_t<-100] = 0
+    raster_rn = raster_tseb[n_rn,:,:]
+    raster_rn[raster_rn>upper_boundary] = 0
+    raster_rn[raster_rn<lower_boundary] = 0
+    out_rn = raster_rn*raster_footprint
+    
+    raster_h = raster_tseb[n_h,:,:]
+    raster_h[raster_h>upper_boundary] = 0
+    raster_h[raster_h<lower_boundary] = 0
+    out_h = raster_h*raster_footprint
+    
+    raster_le = raster_tseb[n_le,:,:]
+    raster_le[raster_le>upper_boundary] = 0
+    raster_le[raster_le<lower_boundary] = 0
+    out_le = raster_le*raster_footprint
+    
+    raster_g = raster_tseb[n_g,:,:]
+    raster_g[raster_g>upper_boundary] = 0
+    raster_g[raster_g<lower_boundary] = 0
+    out_g = raster_g*raster_footprint
+    
+    raster_t = raster_tseb_ancillary[n_t_et,:,:]
+    raster_t[raster_t>1] = 0
+    raster_t[raster_t<0] = 0
+    out_t = out_le*raster_t
 
     out_rn = np.nansum(out_rn)
     out_h = np.nansum(out_h)
