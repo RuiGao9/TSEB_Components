@@ -15,6 +15,8 @@ The main idea is get the digital number of the main components from the TSEB res
 - `n_g`: the number layer of the soil surface heat flux.
 - `n_t_et`: the number layer of the ratio between canopy latent heat flux and total latent heat flux.
 - `pixel_size`: the pixel size of the image, e.g., 3.6 meter by 3.6 meter.
+- `upper_boundary`: the upper threshold for all fluxes at one pixel which does not make sense, e.g., 10,000 W/m2 for LE at one pixel.
+- `lower_boundary`: the lower threshold for all fluxes at one pixel which does not make sense, e.g., -1,500 W/m2 for LE at one pixel.
 
 ## Contact
 [Rui Gao](https://www.researchgate.net/profile/Rui-Gao-55)<br>
