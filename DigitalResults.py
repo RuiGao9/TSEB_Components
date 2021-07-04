@@ -1,18 +1,18 @@
 def DigitalResults(footprint, tseb_pt_1, tseb_pt_2, dir_out, 
                    n_rn, n_h, n_le, n_g, n_t_et, pixel_size):
-'''
-parameters:
-footprint: directory of the footprint image.
-tseb_pt_1: directory of the TSEB result.
-tseb_pt_2: directory of the TSEB ancillary result.
-dir_out: directory of the outputs from this scripts. they are transform results and they can be deleted.
-n_rn, n_h, n_le, n_g: the layer number of the net radiation, sensible heat flux, latent heat flux, and soil surface heat flux.
-n_t_et: the layer number of the ratio between canopy latent heat flux and total latent heat flux.
-pixel_size: the pixel size (e.g., 3.6 meter by 3.6 meter)
+    '''
+    parameters:
+    footprint: directory of the footprint image.
+    tseb_pt_1: directory of the TSEB result.
+    tseb_pt_2: directory of the TSEB ancillary result.
+    dir_out: directory of the outputs from this scripts. they are transform results and they can be deleted.
+    n_rn, n_h, n_le, n_g: the layer number of the net radiation, sensible heat flux, latent heat flux, and soil surface heat flux.
+    n_t_et: the layer number of the ratio between canopy latent heat flux and total latent heat flux.
+    pixel_size: the pixel size (e.g., 3.6 meter by 3.6 meter)
 
-return:
-Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, and canopy latent heat flux within the footprint gained from TSEB model.
-'''
+    return:
+    Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, and canopy latent heat flux within the footprint gained from TSEB model.
+    '''
     import arcpy
     import numpy as np
     import pandas as pd
