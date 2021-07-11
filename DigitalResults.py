@@ -1,11 +1,11 @@
-def DigitalResults(footprint, tseb_pt_1, tseb_pt_2, dir_out, 
+def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out, 
                    n_rn, n_h, n_le, n_g, n_t_et, pixel_size,
                    upper_boundary, lower_boundary):
     '''
     parameters:
     footprint: directory of the footprint image.
-    tseb_pt_1: directory of the TSEB result.
-    tseb_pt_2: directory of the TSEB ancillary result.
+    tseb_r_1: directory of the TSEB result: multiple-layer image.
+    tseb_r_2: directory of the TSEB ancillary result: multiple-layer image.
     dir_out: directory of the outputs from this scripts. they are transform results and they can be deleted.
     n_rn, n_h, n_le, n_g: the layer number of the net radiation, sensible heat flux, latent heat flux, and soil surface heat flux.
     n_t_et: the layer number of the ratio between canopy latent heat flux and total latent heat flux.
@@ -26,22 +26,22 @@ def DigitalResults(footprint, tseb_pt_1, tseb_pt_2, dir_out,
                               out_raster=dir_out+"\\footprint_resample.tif", 
                               cell_size=cellsize, 
                               resampling_type="BILINEAR")
-    Grid_Describe = arcpy.Describe(tseb_pt_1)
+    Grid_Describe = arcpy.Describe(tseb_r_1)
     Grid_Extent = Grid_Describe.extent
     extent = "{} {} {} {}".format(Grid_Extent.XMin, Grid_Extent.YMin, Grid_Extent.XMax, Grid_Extent.YMax)
     
     arcpy.Clip_management(in_raster=dir_out+"\\footprint_resample.tif", 
                           rectangle=extent, 
                           out_raster=dir_out+"\\footprint_clip.tif", 
-                          in_template_dataset=tseb_pt_1, 
+                          in_template_dataset=tseb_r_1, 
                           nodata_value="0.000000e+00", 
                           clipping_geometry="NONE", maintain_clipping_extent="MAINTAIN_EXTENT")
 
     raster_footprint = arcpy.RasterToNumPyArray(dir_out+"\\footprint_clip.tif", nodata_to_value=-9999)
     raster_footprint[raster_footprint>1] = 0
     raster_footprint[raster_footprint<0] = 0
-    raster_tseb = arcpy.RasterToNumPyArray(tseb_pt_1, nodata_to_value=-9999)
-    raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_pt_2, nodata_to_value=-9999)
+    raster_tseb = arcpy.RasterToNumPyArray(tseb_r_1, nodata_to_value=-9999)
+    raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_r_2, nodata_to_value=-9999)
 
     raster_rn = raster_tseb[n_rn,:,:]
     raster_rn[raster_rn>upper_boundary] = 0
