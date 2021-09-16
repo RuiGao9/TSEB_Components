@@ -1,6 +1,6 @@
 def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out, 
                    n_rn, n_h, n_le, n_g, n_t_et, pixel_size,
-                   upper_boundary, lower_boundary):
+                   upper_boundary, lower_boundary, delete_tmp_files="Yes"):
     '''
     parameters:
     footprint: directory of the footprint image.
@@ -19,6 +19,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     import arcpy
     import numpy as np
     import pandas as pd
+    import os
     
     cellsize = str(pixel_size)+" "+str(pixel_size)
 
@@ -78,4 +79,11 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     print("Latent heat flux:",round(out_le,3))
     print("Soil surface heat flux:",round(out_g,3))
     print("Canopy latent heat flux:",round(out_t,3))
+    
+    if delete_tmp_files == "Yes":
+        os.remove(dir_out+"\\footprint_resample.tif")
+        os.remove(dir_out+"\\footprint_clip.tif")
+    else:
+        print("Temporary files are saved in the output folder.")
+        
     return(out_rn, out_h, out_le, out_g, out_t)
