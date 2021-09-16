@@ -17,7 +17,7 @@ The main idea is get the digital number of the main components from the TSEB res
 - `pixel_size`: the pixel size of the image, e.g., 3.6 meter by 3.6 meter.
 - `upper_boundary`: the upper threshold for all fluxes at one pixel which does not make sense, e.g., 10,000 W/m2 for LE at one pixel.
 - `lower_boundary`: the lower threshold for all fluxes at one pixel which does not make sense, e.g., -1,500 W/m2 for LE at one pixel.
-- `delete_tmp_files`:
+- `delete_tmp_files`: the default string is "Yes", and this means the temporary (middle products) files will be deleted at the end. Any other input (string) results in saving the temporary files
 
 ## How to cite:
 Please cite the paper below when you are using this script for your paper work.<br>
