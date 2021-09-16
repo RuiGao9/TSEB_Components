@@ -12,6 +12,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     pixel_size: the pixel size (e.g., 3.6 meter by 3.6 meter).
     upper_boundary: the upper threshold for all fluxes at one pixel which does not make sense, e.g., 10,000 W/m2 for LE at one pixel.
     lower_boundary: the lower threshold for all fluxes at one pixel which does not make sense, e.g., -1,500 W/m2 for LE at one pixel.
+    delete_tmp_files: Default is "Yes", and this means the temporary (middle products) files will be deleted at the end. Any other input (string) results in saving the temporary files.
 
     return:
     Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, and canopy latent heat flux within the footprint gained from TSEB model.
