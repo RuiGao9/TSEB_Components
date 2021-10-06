@@ -75,11 +75,13 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     out_le = np.nansum(out_le)
     out_g = np.nansum(out_g)
     out_t = np.nansum(out_t)
+    out_tet = np.nanmean(raster_t)
     print("Net radiation:",round(out_rn,3))
     print("Sensible heat flux:",round(out_h,3))
     print("Latent heat flux:",round(out_le,3))
     print("Soil surface heat flux:",round(out_g,3))
     print("Canopy latent heat flux:",round(out_t,3))
+    print("ET partitioning:",round(out_tet,3))
     
     if delete_tmp_files == "Yes":
         os.remove(dir_out+"\\footprint_resample.tif")
@@ -87,4 +89,4 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     else:
         print("Temporary files are saved in the output folder.")
         
-    return(out_rn, out_h, out_le, out_g, out_t)
+    return(out_rn, out_h, out_le, out_g, out_t, out_tet)
