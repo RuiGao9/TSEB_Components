@@ -76,11 +76,11 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     out_g = np.nansum(out_g)
     out_t = np.nansum(out_t)
     out_tet = np.nanmean(raster_t)
-    print("Net radiation:",round(out_rn,3))
-    print("Sensible heat flux:",round(out_h,3))
-    print("Latent heat flux:",round(out_le,3))
-    print("Soil surface heat flux:",round(out_g,3))
-    print("Canopy latent heat flux:",round(out_t,3))
+    print("Rn - Net radiation:",round(out_rn,3))
+    print("H - Sensible heat flux:",round(out_h,3))
+    print("LE - Latent heat flux:",round(out_le,3))
+    print("G - Soil surface heat flux:",round(out_g,3))
+    print("T - Canopy latent heat flux:",round(out_t,3))
     print("ET partitioning:",round(out_tet,3))
     
     if delete_tmp_files == "Yes":
