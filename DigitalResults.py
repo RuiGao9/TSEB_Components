@@ -40,42 +40,45 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
                           clipping_geometry="NONE", maintain_clipping_extent="MAINTAIN_EXTENT")
 
     raster_footprint = arcpy.RasterToNumPyArray(dir_out+"\\footprint_clip.tif", nodata_to_value=-9999)
-    raster_footprint[raster_footprint>1] = 0
-    raster_footprint[raster_footprint<0] = 0
+    raster_footprint[raster_footprint>1] = np.nan
+    raster_footprint[raster_footprint<0] = np.nan
     raster_tseb = arcpy.RasterToNumPyArray(tseb_r_1, nodata_to_value=-9999)
-    raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_r_2, nodata_to_value=-9999)
+    raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_r_2, nodata_to_value=np.nan)
 
     raster_rn = raster_tseb[n_rn,:,:]
-    raster_rn[raster_rn>upper_boundary] = 0
-    raster_rn[raster_rn<lower_boundary] = 0
+    raster_rn[raster_rn>upper_boundary] = np.nan
+    raster_rn[raster_rn<lower_boundary] = np.nan
     out_rn = raster_rn*raster_footprint
     
     raster_h = raster_tseb[n_h,:,:]
-    raster_h[raster_h>upper_boundary] = 0
-    raster_h[raster_h<lower_boundary] = 0
+    raster_h[raster_h>upper_boundary] = np.nan
+    raster_h[raster_h<lower_boundary] = np.nan
     out_h = raster_h*raster_footprint
     
     raster_le = raster_tseb[n_le,:,:]
-    raster_le[raster_le>upper_boundary] = 0
-    raster_le[raster_le<lower_boundary] = 0
+    raster_le[raster_le>upper_boundary] = np.nan
+    raster_le[raster_le<lower_boundary] = np.nan
     out_le = raster_le*raster_footprint
     
     raster_g = raster_tseb[n_g,:,:]
-    raster_g[raster_g>upper_boundary] = 0
-    raster_g[raster_g<lower_boundary] = 0
+    raster_g[raster_g>upper_boundary] = np.nan
+    raster_g[raster_g<lower_boundary] = np.nan
     out_g = raster_g*raster_footprint
     
     raster_t = raster_tseb_ancillary[n_t_et,:,:]
-    raster_t[raster_t>1] = 0
-    raster_t[raster_t<0] = 0
+    raster_t[raster_t>1] = np.nan
+    raster_t[raster_t<0] = np.nan
     out_t = out_le*raster_t
+    
+    raster_tet = raster_footprint*0+1
+    out_tet = raster_tet*raster_tseb_ancillary[n_t_et,:,:]
+    out_tet = np.nanmean(out_tet)    
 
     out_rn = np.nansum(out_rn)
     out_h = np.nansum(out_h)
     out_le = np.nansum(out_le)
     out_g = np.nansum(out_g)
     out_t = np.nansum(out_t)
-    out_tet = np.nanmean(raster_t)
     print("Rn - Net radiation:",round(out_rn,3))
     print("H - Sensible heat flux:",round(out_h,3))
     print("LE - Latent heat flux:",round(out_le,3))
