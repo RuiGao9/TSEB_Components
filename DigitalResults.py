@@ -17,7 +17,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     delete_tmp_files: Default is "Yes", and this means the temporary (middle products) files will be deleted at the end. Any other input (string) results in saving the temporary files.
 
     return:
-    Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, and canopy latent heat flux within the footprint gained from TSEB model.
+    Net radiation, sensible heat flux, latent heat flux, soil surface heat flux, canopy latent heat flux, and LAI within the footprint area.
     '''
     import arcpy
     import numpy as np
@@ -101,4 +101,4 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     else:
         print("Temporary files are saved in the output folder.")
         
-    return(out_rn, out_h, out_le, out_g, out_t, out_tet)
+    return(out_rn, out_h, out_le, out_g, out_t, out_tet, out_lai)
