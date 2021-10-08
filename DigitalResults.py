@@ -1,4 +1,5 @@
 def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out, 
+                   lai_image,
                    n_rn, n_h, n_le, n_g, n_t_et, pixel_size,
                    upper_boundary, lower_boundary, delete_tmp_files="Yes"):
     '''
@@ -7,6 +8,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     tseb_r_1: directory of the TSEB result: multiple-layer image.
     tseb_r_2: directory of the TSEB ancillary result: multiple-layer image.
     dir_out: directory of the outputs from this scripts. they are transform results and they can be deleted.
+    lai_image: directory of the LAI image.
     n_rn, n_h, n_le, n_g: the layer number of the net radiation, sensible heat flux, latent heat flux, and soil surface heat flux.
     n_t_et: the layer number of the ratio between canopy latent heat flux and total latent heat flux.
     pixel_size: the pixel size (e.g., 3.6 meter by 3.6 meter).
@@ -44,6 +46,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     raster_footprint[raster_footprint<0] = np.nan
     raster_tseb = arcpy.RasterToNumPyArray(tseb_r_1, nodata_to_value=-9999)
     raster_tseb_ancillary = arcpy.RasterToNumPyArray(tseb_r_2, nodata_to_value=np.nan)
+    raster_lai = arcpy.RasterToNumPyArray(lai_image, nodata_to_value=np.nan)
 
     raster_rn = raster_tseb[n_rn,:,:]
     raster_rn[raster_rn>upper_boundary] = np.nan
@@ -73,18 +76,24 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     raster_tet = raster_footprint*0+1
     out_tet = raster_tet*raster_tseb_ancillary[n_t_et,:,:]
     out_tet = np.nanmean(out_tet)    
+    
+    raster_lai[raster_lai>5] = np.nan
+    raster_lai[raster_lai<0] = np.nan
+    out_lai = raster_lai*raster_footprint
 
     out_rn = np.nansum(out_rn)
     out_h = np.nansum(out_h)
     out_le = np.nansum(out_le)
     out_g = np.nansum(out_g)
     out_t = np.nansum(out_t)
+    out_lai = np.nanmean(out_lai)
     print("Rn - Net radiation:",round(out_rn,3))
     print("H - Sensible heat flux:",round(out_h,3))
     print("LE - Latent heat flux:",round(out_le,3))
     print("G - Soil surface heat flux:",round(out_g,3))
     print("T - Canopy latent heat flux:",round(out_t,3))
     print("ET partitioning:",round(out_tet,3))
+    print("LAI:",round(out_lai,3))
     
     if delete_tmp_files == "Yes":
         os.remove(dir_out+"\\footprint_resample.tif")
