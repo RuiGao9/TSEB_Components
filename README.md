@@ -2,7 +2,7 @@
 Digital number of important components from the TSEB model: Rn, H, LE, G, and LE (Canopy)
 
 ## Brief introduction
-The main idea is get the digital number of the main components from the TSEB results within the footprint. Net radiation, sensible heat flux, latent heat flux, soil heat flux, and canopy latent heat flux.
+The main idea is get the digital value of the LAI and the main components from the TSEB results within the footprint. Net radiation, sensible heat flux, latent heat flux, soil heat flux, canopy latent heat flux, ET partitioning, and LAI.
 
 ## Parameters in this script
 - `footprint`: footprint image.
