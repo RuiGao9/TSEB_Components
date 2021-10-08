@@ -9,6 +9,7 @@ The main idea is get the digital number of the main components from the TSEB res
 - `tseb_pt_1`: a main multiple-image result from the TSEB model.
 - `tseb_pt_2`: the ancillary image result from the TSEB model.
 - `dir_out`: a folder directory the temporary results are saved.
+- `lai_image`: the LAI image in order to get the LAI value within the footprint area. This value is averaged within the footprint area.
 - `n_rn`: the number layer of the net radiation.
 - `n_h`: the number layer of the net radiation.
 - `n_le`: the number layer of the latent heat flux.
@@ -18,6 +19,15 @@ The main idea is get the digital number of the main components from the TSEB res
 - `upper_boundary`: the upper threshold for all fluxes at one pixel which does not make sense, e.g., 10,000 W/m2 for LE at one pixel.
 - `lower_boundary`: the lower threshold for all fluxes at one pixel which does not make sense, e.g., -1,500 W/m2 for LE at one pixel.
 - `delete_tmp_files`: the default string is "Yes", and this means the temporary (middle products) files will be deleted at the end. Any other input (string) results in saving the temporary files
+
+## Returned digital values
+- `out_rn`: Net radiation within the footprint area.
+- `out_h`: Sensible heat flux within the footprint area.
+- `out_le`: Latent heat flux within the footprint area.
+- `out_g`: Ground heat flux within the footprint area.
+- `out_t`: Canopy latent heat flux within the footprint area.
+- `out_tet`: ET partitioning within the footprint area.
+- `out_lai`: Averaged LAI value within the footprint area.
 
 ## How to cite:
 Please cite the paper below when you are using this script for your paper work.<br>
