@@ -79,7 +79,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out,
     
     raster_lai[raster_lai>5] = np.nan
     raster_lai[raster_lai<0] = np.nan
-    out_lai = raster_lai*raster_footprint
+    out_lai = raster_lai*(raster_footprint*0+1)
 
     out_rn = np.nansum(out_rn)
     out_h = np.nansum(out_h)
