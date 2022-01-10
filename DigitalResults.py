@@ -1,4 +1,4 @@
-def DigitalResults(footprint, tseb_r_1, tseb_r_2, dir_out, 
+def DigitalResults(footprint, tseb_r_1, tseb_r_2, temp_image, dir_out, 
                    lai_image,
                    n_rn, n_h, n_le, n_g, n_t_et, pixel_size,
                    upper_boundary, lower_boundary, 
