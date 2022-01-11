@@ -8,6 +8,7 @@ def DigitalResults(footprint, tseb_r_1, tseb_r_2, temp_image, dir_out,
     footprint: directory of the footprint image.
     tseb_r_1: directory of the TSEB result: multiple-layer image.
     tseb_r_2: directory of the TSEB ancillary result: multiple-layer image.
+    temp_image: directory of the temperature image. it could be single-layer or multiple-layer image, but the "single_layer_temp" need to be set    correspondingly.
     dir_out: directory of the outputs from this scripts. they are transform results and they can be deleted.
     lai_image: directory of the LAI image.
     n_rn, n_h, n_le, n_g: the layer number of the net radiation, sensible heat flux, latent heat flux, and soil surface heat flux.
